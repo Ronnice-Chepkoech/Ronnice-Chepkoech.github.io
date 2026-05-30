@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ronnice Chepkoech | Climate–ML Researcher</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0a7c7c;
+    --teal-light: #12a8a8;
+    --teal-pale: #e0f4f4;
+    --earth: #8b6914;
+    --earth-light: #c49a2a;
+    --dark: #0f1923;
+    --mid: #3a4a55;
+    --muted: #6b7e8a;
+    --cream: #f7f3ee;
+    --white: #ffffff;
+    --accent: #d4603a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(15,25,35,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(10,124,124,0.2);
+  }
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--teal-light);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal-light); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 70% 40%, rgba(10,124,124,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(212,96,58,0.06) 0%, transparent 60%);
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(10,124,124,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,124,124,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-left { position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--teal-light);
+    border: 1px solid rgba(18,168,168,0.3);
+    padding: 0.4rem 0.9rem; border-radius: 2px;
+    margin-bottom: 1.8rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-tag::before { content: '◈'; }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.4rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 1rem;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+  .hero-name span { color: var(--teal-light); }
+  .hero-subtitle {
+    font-size: 1.05rem; font-weight: 300; color: var(--muted);
+    line-height: 1.7; margin-bottom: 2rem;
+    max-width: 500px;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+  .stat-item { text-align: left; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 700; color: var(--teal-light);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted);
+    text-transform: uppercase; margin-top: 0.2rem;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+  .btn-primary {
+    padding: 0.85rem 2rem;
+    background: var(--teal);
+    color: white; font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--teal-light); transform: translateY(-2px); }
+  .btn-outline {
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--teal-light); font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    border: 1px solid rgba(18,168,168,0.4); cursor: pointer; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--teal-light); color: white; }
+
+  .hero-right {
+    position: relative; z-index: 1;
+    display: flex; justify-content: center; align-items: center;
+  }
+  .hero-visual {
+    width: 380px; height: 380px;
+    position: relative;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+  .hero-circle {
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba(10,124,124,0.25);
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: rotate 25s linear infinite;
+  }
+  .hero-circle::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--teal-light);
+    border-radius: 50%;
+    position: absolute; top: -4px; left: 50%;
+    transform: translateX(-50%);
+  }
+  .hero-circle-2 {
+    width: 200px; height: 200px;
+    animation: rotate 18s linear infinite reverse;
+  }
+  .hero-circle-2::before { background: var(--accent); }
+  .geo-card {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(15,25,35,0.9);
+    border: 1px solid rgba(10,124,124,0.3);
+    padding: 1.8rem 2rem;
+    text-align: center; width: 200px;
+  }
+  .geo-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .geo-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.12em;
+    color: var(--teal-light); text-transform: uppercase;
+  }
+  .orbit-tag {
+    position: absolute;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.08em;
+    color: var(--muted); text-transform: uppercase;
+    background: rgba(15,25,35,0.9);
+    border: 1px solid rgba(10,124,124,0.2);
+    padding: 0.3rem 0.6rem;
+  }
+  .ot1 { top: 5%; left: 10%; }
+  .ot2 { bottom: 15%; left: 5%; }
+  .ot3 { top: 15%; right: 5%; }
+  .ot4 { bottom: 5%; right: 10%; }
+
+  @keyframes rotate { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: translateY(0); } }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 3rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--teal-light); margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 700; color: var(--white);
+    margin-bottom: 1rem;
+  }
+  .section-line {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    margin-bottom: 3rem;
+  }
+
+  /* ── ABOUT ── */
+  .about { background: rgba(255,255,255,0.02); }
+  .about-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: start;
+  }
+  .about-text p {
+    color: var(--muted); line-height: 1.85; margin-bottom: 1.2rem;
+    font-size: 0.95rem;
+  }
+  .about-text p strong { color: var(--cream); font-weight: 500; }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.08em;
+    color: var(--teal-light); text-transform: uppercase;
+    border: 1px solid rgba(18,168,168,0.25);
+    padding: 0.3rem 0.7rem;
+  }
+  .about-skills { }
+  .skill-group { margin-bottom: 1.5rem; }
+  .skill-group-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--earth-light); margin-bottom: 0.6rem;
+  }
+  .skill-bar-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem; }
+  .skill-bar-label { font-size: 0.78rem; color: var(--muted); width: 120px; flex-shrink: 0; }
+  .skill-bar-track {
+    flex: 1; height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px;
+  }
+  .skill-bar-fill {
+    height: 100%; background: linear-gradient(90deg, var(--teal), var(--teal-light));
+    border-radius: 2px;
+    transition: width 1.2s ease;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5px;
+  }
+  .project-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: default;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--teal), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .project-card:hover { background: rgba(10,124,124,0.05); border-color: rgba(10,124,124,0.25); }
+  .project-card:hover::before { opacity: 1; }
+  .project-card.featured { grid-column: span 2; }
+  .project-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--teal-light); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .project-type::before {
+    content: ''; width: 20px; height: 1px;
+    background: var(--teal-light); display: inline-block;
+  }
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--white); margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+  .project-desc {
+    font-size: 0.85rem; line-height: 1.75;
+    color: var(--muted); margin-bottom: 1.5rem;
+  }
+  .project-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.2rem; }
+  .meta-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.06em;
+    color: var(--muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 0.25rem 0.6rem;
+  }
+  .project-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--teal-light); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    transition: gap 0.2s;
+  }
+  .project-link:hover { gap: 0.7rem; }
+  .project-link::after { content: '→'; }
+  .project-highlight {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.82rem; color: var(--muted); line-height: 1.5;
+  }
+  .project-highlight::before { content: '◆'; color: var(--teal); font-size: 0.5rem; margin-top: 0.35rem; flex-shrink: 0; }
+
+  /* ── PUBLICATIONS ── */
+  .publications { background: rgba(255,255,255,0.015); }
+  .pub-list { display: flex; flex-direction: column; gap: 0; }
+  .pub-card {
+    border: 1px solid rgba(255,255,255,0.06);
+    border-bottom: none;
+    padding: 2rem 2.2rem;
+    display: grid; grid-template-columns: auto 1fr auto;
+    gap: 1.5rem; align-items: start;
+    transition: background 0.2s;
+  }
+  .pub-card:last-child { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .pub-card:hover { background: rgba(10,124,124,0.04); }
+  .pub-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900;
+    color: rgba(10,124,124,0.25);
+    line-height: 1; padding-top: 0.2rem;
+    min-width: 2.5rem;
+  }
+  .pub-content { }
+  .pub-journal {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--teal-light); margin-bottom: 0.4rem;
+  }
+  .pub-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 700; color: var(--white);
+    line-height: 1.35; margin-bottom: 0.5rem;
+  }
+  .pub-meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .pub-abstract { font-size: 0.8rem; color: var(--muted); line-height: 1.7; margin-bottom: 0.8rem; }
+  .pub-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem; letter-spacing: 0.08em;
+    color: var(--earth-light);
+    border: 1px solid rgba(196,154,42,0.3);
+    padding: 0.2rem 0.6rem; display: inline-block; margin-right: 0.4rem;
+  }
+  .pub-link {
+    align-self: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--teal-light); text-decoration: none;
+    border: 1px solid rgba(18,168,168,0.25);
+    padding: 0.5rem 1rem; white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+  }
+  .pub-link:hover { background: var(--teal); color: white; border-color: var(--teal); }
+
+  /* ── TRAINING ── */
+  .training-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; }
+  .training-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 2rem;
+    transition: border-color 0.3s;
+  }
+  .training-card:hover { border-color: rgba(10,124,124,0.3); }
+  .training-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .training-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem; font-weight: 900;
+    color: var(--teal-light); line-height: 1;
+  }
+  .training-unit { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .training-title { font-size: 0.9rem; font-weight: 600; color: var(--cream); margin-bottom: 0.5rem; }
+  .training-detail { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── CONTACT ── */
+  .contact { background: rgba(10,124,124,0.05); border-top: 1px solid rgba(10,124,124,0.15); }
+  .contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center; }
+  .contact-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; color: var(--white);
+    margin-bottom: 1rem;
+  }
+  .contact-sub { font-size: 0.9rem; color: var(--muted); line-height: 1.75; margin-bottom: 2rem; }
+  .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    font-size: 0.85rem; color: var(--muted);
+  }
+  .contact-item-icon {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(18,168,168,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; flex-shrink: 0;
+  }
+  .contact-item a { color: var(--teal-light); text-decoration: none; }
+  .contact-item a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 1.5rem 3rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-left { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); }
+  .footer-right { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: rgba(10,124,124,0.5); }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">R. Chepkoech // Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#training">Training</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-left">
+    <div class="hero-tag">Climate · ML · Earth Systems</div>
+    <h1 class="hero-name">Ronnice<br><span>Chepkoech</span></h1>
+    <p class="hero-subtitle">Climate–ML researcher & earth systems modeller with 7+ years developing open-source platforms that couple machine learning with land, energy, water, and agricultural systems across Eastern Africa.</p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">7+</div>
+        <div class="stat-label">Years Research</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">140+</div>
+        <div class="stat-label">Trained</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2</div>
+        <div class="stat-label">First-Author Pubs</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">SFU</div>
+        <div class="stat-label">Canada Fellowship</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#publications" class="btn-outline">Publications</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-circle"></div>
+      <div class="hero-circle hero-circle-2"></div>
+      <div class="geo-card">
+        <div class="geo-icon">🌍</div>
+        <div class="geo-title">GeoCLEWs-Agro</div>
+      </div>
+      <div class="orbit-tag ot1">CLEWs</div>
+      <div class="orbit-tag ot2">ML Models</div>
+      <div class="orbit-tag ot3">MODFLOW</div>
+      <div class="orbit-tag ot4">CMIP Data</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="section-label">Background</div>
+    <h2 class="section-title">About Me</h2>
+    <div class="section-line"></div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I am a <strong>climate–ML researcher and environmental engineer</strong> based in Kenya, specialising in the intersection of machine learning and earth system science. My work centres on developing ML-integrated modelling platforms that support climate-resilient policymaking across Eastern Africa.</p>
+        <p>I created <strong>GeoCLEWs-Agro</strong> during a <strong>6-month visiting research fellowship at Simon Fraser University (SFU), Canada</strong> (Dec 2023 – Jun 2024), working within the DeltaE+ Research Group and funded by <strong>Global Affairs Canada</strong>. The platform integrates ML-augmented CLEWs (Climate, Land, Energy, and Water Systems) modelling — directly addressing parameterization emulation, climate projection, bias correction, and climate impact modelling challenges.</p>
+        <p>My research spans <strong>earth system model outputs, observational records</strong>, and applied ML for scenario analysis and resource planning. I hold an MSc in Environmental Engineering from Taita Taveta University and have co-authored peer-reviewed research published in Springer Nature journals.</p>
+        <p>Beyond research, I have delivered capacity-building training to <strong>140+ students, professionals, and policymakers</strong> and represented my institutions at 6+ regional and international scientific forums.</p>
+        <div class="about-tags">
+          <span class="tag">CLEWs Modelling</span>
+          <span class="tag">ML for Climate</span>
+          <span class="tag">Parameterization Emulation</span>
+          <span class="tag">WEAP / MODFLOW</span>
+          <span class="tag">Python / R</span>
+          <span class="tag">Open-Source Dev</span>
+          <span class="tag">Eastern Africa</span>
+          <span class="tag">Policy Engagement</span>
+        </div>
+      </div>
+      <div class="about-skills">
+        <div class="skill-group">
+          <div class="skill-group-label">ML & Programming</div>
+          <div class="skill-bar-row"><span class="skill-bar-label">Python</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div></div>
+          <div class="skill-bar-row"><span class="skill-bar-label">R / SPSS</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%"></div></div></div>
+          <div class="skill-bar-row"><span class="skill-bar-label">ML Modelling</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div></div>
+          <div class="skill-bar-row"><span class="skill-bar-label">Java</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:65%"></div></div></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Climate & Earth Systems</div>
+          <div class="skill-bar-row"><span class="skill-bar-label">CLEWs / OSeMOSYS</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:95%"></div></div></div>
+          <div class="skill-bar-row"><span class="skill-bar-label">WEAP</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+          <div class="skill-bar-row"><span class="skill-bar-label">MODFLOW / MT3DMS</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div></div>
+          <div class="skill-bar-row"><span class="skill-bar-label">HEC-RAS / HEC-HMS</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:75%"></div></div></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">GIS & Visualisation</div>
+          <div class="skill-bar-row"><span class="skill-bar-label">ArcGIS / QGIS</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+          <div class="skill-bar-row"><span class="skill-bar-label">Power BI / Tableau</span><div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label">Work</div>
+    <h2 class="section-title">Key Projects</h2>
+    <div class="section-line"></div>
+    <div class="projects-grid">
+
+      <!-- Featured: GeoCLEWs-Agro -->
+      <div class="project-card featured reveal">
+        <div class="project-type">Flagship Open-Source Platform · Simon Fraser University, Canada</div>
+        <div class="project-title">GeoCLEWs-Agro</div>
+        <p class="project-desc">Developed during a <strong>6-month Global Affairs Canada–funded visiting research fellowship at Simon Fraser University (SFU)</strong>, DeltaE+ Research Group (Dec 2023 – Jun 2024). GeoCLEWs-Agro is an open-source ML-integrated earth systems platform coupling agriculture, land use, energy, and water systems — enabling parameterization emulation, scenario analysis, bias correction, and climate impact assessment across the food–energy–water nexus.</p>
+        <div class="project-highlight">Built at a leading Canadian research university in international collaboration, funded by Global Affairs Canada — demonstrating peer-reviewed international recognition of the work's research and policy relevance.</div>
+        <div class="project-highlight">Integrates ML-augmented parameterization with multi-sector earth system model outputs to generate climate projection scenarios for Kenya and Eastern Africa.</div>
+        <div class="project-highlight">Supports bias correction workflows and learned parameterization schemes for subgrid-scale agricultural and hydrological processes. Publicly available on GitHub as an open-source, reproducible tool.</div>
+        <div class="project-meta">
+          <span class="meta-chip">Simon Fraser University</span>
+          <span class="meta-chip">Global Affairs Canada</span>
+          <span class="meta-chip">Python</span>
+          <span class="meta-chip">CLEWs / OSeMOSYS</span>
+          <span class="meta-chip">ML Emulation</span>
+          <span class="meta-chip">WEAP</span>
+          <span class="meta-chip">Open Source</span>
+        </div>
+        <a href="https://github.com/Ronnice-Chepkoech" class="project-link" target="_blank">View on GitHub</a>
+      </div>
+
+      <!-- CESMECC Research -->
+      <div class="project-card reveal">
+        <div class="project-type">Research Leadership</div>
+        <div class="project-title">Climate Resilience Research @ CESMECC</div>
+        <p class="project-desc">Led 3+ interdisciplinary research projects on climate resilience and sustainable mining at CESMECC, producing peer-reviewed and policy-relevant outputs. Applied CLEWs-based ML modelling frameworks for stakeholder-facing policymaking support.</p>
+        <div class="project-highlight">Extended parameterization and scenario analysis capabilities for mining–climate nexus.</div>
+        <div class="project-highlight">Built partnerships with 5+ institutions; represented at 6 regional and international scientific forums.</div>
+        <div class="project-meta">
+          <span class="meta-chip">CLEWs</span>
+          <span class="meta-chip">Scenario Analysis</span>
+          <span class="meta-chip">Policy Research</span>
+          <span class="meta-chip">2023</span>
+        </div>
+        <a href="#contact" class="project-link">Request Details</a>
+      </div>
+
+      <!-- MODFLOW / Groundwater -->
+      <div class="project-card reveal">
+        <div class="project-type">Predictive Modelling</div>
+        <div class="project-title">Mine Contaminant Transport Modelling, Mlolongo</div>
+        <p class="project-desc">Investigated water quality and modelled contaminant transport from an abandoned mine to surrounding aquifers using MODFLOW and MT3DMS. Predicted spatial distribution and migration of contaminants over time, informing groundwater protection strategy.</p>
+        <div class="project-highlight">Predictive modelling showed 5.1 km radius vulnerability zone for shallow aquifers.</div>
+        <div class="project-highlight">Published as first-author paper in <em>Discover Water</em> (Springer Nature, 2025).</div>
+        <div class="project-meta">
+          <span class="meta-chip">MODFLOW</span>
+          <span class="meta-chip">MT3DMS</span>
+          <span class="meta-chip">Groundwater</span>
+          <span class="meta-chip">Published 2025</span>
+        </div>
+        <a href="https://link.springer.com/article/10.1007/s43832-025-00278-y" class="project-link" target="_blank">Read Paper</a>
+      </div>
+
+      <!-- EIA / NEMA -->
+      <div class="project-card reveal">
+        <div class="project-type">Regulatory & Field Work</div>
+        <div class="project-title">Environmental Impact Assessments @ NEMA</div>
+        <p class="project-desc">As EIA Officer at Kenya's National Environment Management Authority, reviewed 15+ EIA reports, facilitated 10+ public consultations, and conducted 15+ field inspections — building a rigorous foundation in quantitative environmental assessment.</p>
+        <div class="project-highlight">Technical analysis of environmental and climate impacts across diverse project types.</div>
+        <div class="project-highlight">Streamlined EIA documentation processes for improved regulatory compliance.</div>
+        <div class="project-meta">
+          <span class="meta-chip">EIA Review</span>
+          <span class="meta-chip">Field Inspection</span>
+          <span class="meta-chip">Kenya</span>
+          <span class="meta-chip">2018–2019</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="publications" id="publications">
+  <div class="section-inner">
+    <div class="section-label">Research</div>
+    <h2 class="section-title">Publications</h2>
+    <div class="section-line"></div>
+    <div class="pub-list reveal">
+
+      <div class="pub-card">
+        <div class="pub-num">01</div>
+        <div class="pub-content">
+          <div class="pub-journal">Discover Water · Springer Nature · 2025</div>
+          <div class="pub-title">Assessment of the Transportation of Abandoned Mine Water Contaminants to the Surrounding Aquifers: A Case of Mlolongo Open-Pit Lake, Kenya</div>
+          <div class="pub-meta">Ronnice Chepkoech, Bernard Ouma Alunda, Antony Mutua Nzioka · Vol. 5, Issue 1, Art. 94 · DOI: 10.1007/s43832-025-00278-y</div>
+          <div class="pub-abstract">Investigated water quality and modelled contaminant transport from an abandoned mine site to surrounding aquifers using MODFLOW and MT3DMS codes. Identified multiple contaminants exceeding WHO threshold limits and predicted spatial distribution and migration patterns — showing vulnerability of shallow aquifers within a ~5.1 km radius. Open Access (CC BY-NC-ND 4.0).</div>
+          <span class="pub-badge">First Author</span>
+          <span class="pub-badge">Open Access</span>
+          <span class="pub-badge">MODFLOW</span>
+        </div>
+        <a href="https://link.springer.com/article/10.1007/s43832-025-00278-y" class="pub-link" target="_blank">View Paper</a>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">02</div>
+        <div class="pub-content">
+          <div class="pub-journal">Journal of Water and Environmental Sustainability (WES) · 2024</div>
+          <div class="pub-title">First-Author Publication — Water & Environmental Sustainability</div>
+          <div class="pub-meta">Ronnice Chepkoech et al. · Article ID: 218323 · journalwes.com</div>
+          <div class="pub-abstract">Peer-reviewed research published in the Journal of Water and Environmental Sustainability, addressing climate–water–environment interactions. Full details available via the journal link.</div>
+          <span class="pub-badge">First Author</span>
+          <span class="pub-badge">Peer Reviewed</span>
+        </div>
+        <a href="https://www.journalwes.com/article_218323.html" class="pub-link" target="_blank">View Paper</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TRAINING & IMPACT -->
+<section id="training">
+  <div class="section-inner">
+    <div class="section-label">Impact</div>
+    <h2 class="section-title">Training & Capacity Building</h2>
+    <div class="section-line"></div>
+    <div class="training-grid reveal">
+      <div class="training-card">
+        <div class="training-icon">🎓</div>
+        <div class="training-num">140+</div>
+        <div class="training-unit">Participants trained</div>
+        <div class="training-title">CLEWs & Climate ML Workshops</div>
+        <div class="training-detail">Delivered hands-on CLEWs modelling training to students, professionals, and policymakers across Kenya. Designed and updated toolkits aligned with the latest ML-for-climate research advances.</div>
+      </div>
+      <div class="training-card">
+        <div class="training-icon">🏛️</div>
+        <div class="training-num">6+</div>
+        <div class="training-unit">Forums represented</div>
+        <div class="training-title">Regional & International Engagement</div>
+        <div class="training-detail">Represented AECSC and CESMECC at regional and international scientific forums, raising institutional visibility and forging partnerships with 5+ academic and government institutions.</div>
+      </div>
+      <div class="training-card">
+        <div class="training-icon">📋</div>
+        <div class="training-num">6+</div>
+        <div class="training-unit">Proposals drafted</div>
+        <div class="training-title">Grant Writing & Reporting</div>
+        <div class="training-detail">Drafted and submitted 6+ grant proposals; authored 7+ technical reports and policy documents for donor organizations and government stakeholders on climate–energy–water nexus topics.</div>
+      </div>
+      <div class="training-card">
+        <div class="training-icon">🔬</div>
+        <div class="training-num">3+</div>
+        <div class="training-unit">Research projects led</div>
+        <div class="training-title">Research Leadership @ CESMECC</div>
+        <div class="training-detail">Led multi-disciplinary research on climate resilience and sustainable resource management, producing peer-reviewed and policy-relevant insights for government and international stakeholders.</div>
+      </div>
+      <div class="training-card">
+        <div class="training-icon">🌿</div>
+        <div class="training-num">15+</div>
+        <div class="training-unit">EIA reports reviewed</div>
+        <div class="training-title">Environmental Assessment @ NEMA</div>
+        <div class="training-detail">Reviewed EIA reports, conducted field inspections, and facilitated public consultations across Kenya — developing deep expertise in regulatory environmental and climate impact assessment.</div>
+      </div>
+      <div class="training-card">
+        <div class="training-icon">💻</div>
+        <div class="training-num">1</div>
+        <div class="training-unit">Open-source platform</div>
+        <div class="training-title">GeoCLEWs-Agro on GitHub</div>
+        <div class="training-detail">Developed and maintains GeoCLEWs-Agro as a publicly available open-source ML-integrated earth systems platform — demonstrating reproducible methodology and commitment to open science.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid reveal">
+      <div>
+        <div class="section-label">Get in Touch</div>
+        <div class="contact-title">Open for Climate–ML<br>Project Collaboration</div>
+        <p class="contact-sub">Available for remote, project-based work in climate modelling, ML applied to earth system science, parameterization emulation, bias correction, and climate impact assessment. Let's connect.</p>
+        <a href="mailto:chepkoechronnice13@gmail.com" class="btn-primary">Send Email</a>
+      </div>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-item-icon">✉</div>
+          <div><a href="mailto:chepkoechronnice13@gmail.com">chepkoechronnice13@gmail.com</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <div>+254 704 693 141</div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">⌥</div>
+          <div><a href="https://github.com/Ronnice-Chepkoech" target="_blank">github.com/Ronnice-Chepkoech</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">in</div>
+          <div><a href="https://linkedin.com/in/chepkoech-ronnice" target="_blank">linkedin.com/in/chepkoech-ronnice</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>Nairobi, Kenya · Remote-ready</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2025 Ronnice Chepkoech — Climate–ML Researcher</div>
+  <div class="footer-right">GeoCLEWs-Agro // AECSC // CESMECC</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
